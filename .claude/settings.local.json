@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx @tech-leads-club/agent-skills install --skill tlc-spec-driven)"
+    ]
+  }
+}

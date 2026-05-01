@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ─── Paleta Fontes Figueiredo Advogados ───────────────────────────────
+       Logo: águia em silhueta preta, tipografia serif, fundo branco.
+       Identidade: autoridade, sobriedade, elegância jurídica.
+
+       brand-50…900  → escala charcoal (preto → grafite → cinza)
+       gold-*        → acento dourado para KPI cards e CTAs primários
+       Valores em HSL para Tailwind <alpha-value>.
+    */
+
+    /* Charcoal / Preto */
+    --brand-50:  220 14% 96%;   /* #F3F4F5 — fundo sutil */
+    --brand-100: 220 12% 90%;   /* #E3E5E8 */
+    --brand-200: 220 10% 78%;   /* #C3C6CC */
+    --brand-300: 220  9% 62%;   /* #9AA0AB */
+    --brand-400: 220  8% 46%;   /* #707680 */
+    --brand-500: 220 10% 30%;   /* #474D55 */
+    --brand-600: 220 14% 20%;   /* #2E3440 */
+    --brand-700: 225 18% 14%;   /* #1C2133 — charcoal escuro */
+    --brand-800: 228 22%  9%;   /* #111622 */
+    --brand-900: 230 25%  5%;   /* #090C14 — quase preto */
+
+    /* Dourado — acento premium */
+    --gold-300: 42 80% 72%;     /* #F0CF7F */
+    --gold-400: 40 72% 58%;     /* #D4A53B */
+    --gold-500: 38 68% 46%;     /* #C9963A — dourado principal */
+    --gold-600: 36 65% 36%;     /* #9A6F28 */
+
+    /* Gradientes */
+    --brand-gradient: linear-gradient(
+      135deg,
+      hsl(var(--brand-900)) 0%,
+      hsl(var(--brand-700)) 100%
+    );
+    /* Acento dourado para KPI cards de destaque */
+    --accent-gradient: linear-gradient(
+      135deg,
+      hsl(var(--gold-500)) 0%,
+      hsl(var(--gold-300)) 100%
+    );
+
+    --background: 0 0% 98%;
+    --foreground: 230 25% 5%;
+    --muted: 220 14% 94%;
+    --muted-foreground: 220 9% 46%;
+    --border: 220 12% 88%;
+    --ring: 225 18% 14%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 230 25% 6%;
+    --foreground: 220 14% 96%;
+    --muted: 225 18% 12%;
+    --muted-foreground: 220 9% 55%;
+    --border: 225 15% 18%;
+    --ring: 40 72% 58%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
