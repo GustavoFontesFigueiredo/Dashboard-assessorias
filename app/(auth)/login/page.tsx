@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -40,26 +39,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleMagicLink = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      setError(error.message);
-    } else {
-      setError(""); // Mostra sucesso via UI
-      alert("Verifique seu e-mail para o link de login!");
-    }
-    setLoading(false);
-  };
 
   return (
     <Card className="border-brand-200 shadow-lg">
@@ -79,77 +58,39 @@ export default function LoginPage() {
           </div>
         )}
 
-        <Tabs defaultValue="password" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="password">Senha</TabsTrigger>
-            <TabsTrigger value="magic">Link de Acesso</TabsTrigger>
-          </TabsList>
-
-          {/* Abas de login */}
-          <TabsContent value="password" className="space-y-4">
-            <form onSubmit={handleSignIn} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">E-mail</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="seu@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  disabled={loading}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Senha</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  disabled={loading}
-                />
-              </div>
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-brand-gradient text-white hover:opacity-90"
-              >
-                {loading ? "Entrando..." : "Entrar"}
-              </Button>
-            </form>
-          </TabsContent>
-
-          <TabsContent value="magic" className="space-y-4">
-            <form onSubmit={handleMagicLink} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="magic-email">E-mail</Label>
-                <Input
-                  id="magic-email"
-                  type="email"
-                  placeholder="seu@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  disabled={loading}
-                />
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Enviaremos um link de acesso para seu e-mail. Clique nele para
-                entrar.
-              </p>
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-brand-gradient text-white hover:opacity-90"
-              >
-                {loading ? "Enviando..." : "Enviar Link"}
-              </Button>
-            </form>
-          </TabsContent>
-        </Tabs>
+        <form onSubmit={handleSignIn} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">E-mail</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="seu@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={loading}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Senha</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              disabled={loading}
+            />
+          </div>
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-brand-gradient text-white hover:opacity-90"
+          >
+            {loading ? "Entrando..." : "Entrar"}
+          </Button>
+        </form>
 
         <p className="text-center text-xs text-muted-foreground">
           Desenvolvido pela equipe Fontes Figueiredo

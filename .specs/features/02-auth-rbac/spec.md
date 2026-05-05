@@ -9,7 +9,7 @@ Sem autenticação e controle de acesso baseado em papel, o app não consegue se
 ## Requirements
 
 - **R1** — Schema Drizzle: tabelas `profiles`, `lawyer_assignments` com RLS habilitada. `profiles` espelha `auth.users` e inclui `role` (enum), `client_id` (FK para tabela `clients` — futura), `nome`, `ativo`. `lawyer_assignments` mapeia N:N advogados ↔ clientes.
-- **R2** — Supabase Auth: autenticação por e-mail/senha nativa + suporte a magic link (verificação por link). Callback OAuth/confirmação automática configurada em `app/(auth)/auth/callback/route.ts`.
+- **R2** — Supabase Auth: autenticação por e-mail/senha nativa. Callback configurado em `app/(auth)/auth/callback/route.ts` para futuros OAuth/integrações.
 - **R3** — RLS Policies: políticas no Postgres por papel — `profiles` e `lawyer_assignments` são acessíveis de acordo com `(select role from profiles where id = auth.uid())`.
 - **R4** — Helper `lib/auth/rbac.ts`: funções `getSessionUser()`, `canAccessClient(userId, clientId)`, `canEditCase(userId, caseId)`, `hasRole(userId, role)`.
 - **R5** — Middleware `lib/middleware.ts`: redireciona `/` → `/login` se não autenticado; `/login` → `/dashboard` se já logado; `/client/*` → `/login` se não-cliente; `/internal/*` → `/login` se não-interno.
@@ -19,7 +19,6 @@ Sem autenticação e controle de acesso baseado em papel, o app não consegue se
 - **R9** — Primeiro admin seed: script `supabase/seed.sql` cria 1 admin inicial (hardcoded ou via ENV para testes).
 - **R10** — Testes e2e: Playwright valida fluxos:
   - Anônimo → `/login` → e-mail/senha → `/dashboard` (role interno)
-  - Anônimo → `/login` → magic link → confirmação → `/dashboard`
   - Cliente logado tenta `/internal/dashboard` → redirecionado para `/client/portal`
   - Advogado A tenta ver dados sem atribuição → acesso negado (RLS)
 
