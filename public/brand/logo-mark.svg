@@ -1,0 +1,7 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+  <!-- Águia simplificada — apenas o símbolo para favicon/header -->
+  <path d="M128 20 C 100 20 85 45 85 75 C 85 95 95 110 110 115 L 110 140 C 110 155 120 165 135 165 L 128 175 L 121 165 L 136 165 C 151 165 161 155 161 140 L 161 115 C 176 110 186 95 186 75 C 186 45 171 20 128 20 Z M 120 60 L 136 60 L 136 85 L 120 85 Z"/>
+  <!-- Asas -->
+  <path d="M 85 80 Q 60 75 50 95 Q 55 85 75 85 Z"/>
+  <path d="M 171 80 Q 196 75 206 95 Q 201 85 181 85 Z"/>
+</svg>

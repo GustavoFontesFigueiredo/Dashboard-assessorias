@@ -31,9 +31,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# env / secrets
+# env / secrets (não versionados)
+# Nota: .env.local em dev-defaults.env.local para CI/preview
 .env
-.env.local
 .env*.local
 
 # typescript

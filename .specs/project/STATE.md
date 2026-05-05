@@ -12,10 +12,11 @@ Memória persistente entre sessões: decisões, blockers, lições, todos e idei
 - **2026-04-30** — Localização: PT-BR + BRL apenas no v1.
 - **2026-05-01** — Logo recebida: águia em silhueta preta, tipografia serif "FONTES FIGUEIREDO / ADVOGADOS". Paleta atualizada: charcoal (#090C14 → #1C2133) + dourado (#C9963A) como acento. Brand gradient = charcoal escuro. Accent gradient = dourado para KPI de ROI e destaques.
 - **2026-05-01** — Nome oficial: "Fontes Figueiredo Advogados". Sigla "FFADV" mantida nos identificadores técnicos (nome do repo, etc.).
+- **2026-05-04** — Logo SVG integrada: `logo.svg` (completa com texto), `logo-mark.svg` (apenas águia para favicon/header), `logo-mono.svg` (monocromática para impressão). BrandMark carrega o SVG com fallback "FF".
 
 ## Blockers
 
-- **Logo recebida como imagem raster (PNG/JPEG)** — aguardar SVG vetorial do escritório para colocar em `public/brand/logo.svg`, `logo-mark.svg` e `logo-mono.svg`. Até lá, BrandHeader usa fallback textual "FF". Paleta já atualizada com base no visual da logo.
+- _(nenhum)_ — Logo SVG integrada em produção.
 
 ## Lessons
 
