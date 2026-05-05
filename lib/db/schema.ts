@@ -66,22 +66,26 @@ export const lawyerAssignments = pgTable(
 );
 
 /**
- * clients — empresas-cliente (criada aqui para referência, detalhes em 03-clients-users)
+ * clients — empresas-cliente
  */
 export const clients = pgTable(
   "clients",
   {
     id: uuid("id").defaultRandom().primaryKey(),
     razaoSocial: text("razao_social").notNull(),
-    cnpj: text("cnpj"),
+    cnpj: text("cnpj").unique(),
+    responsavelId: uuid("responsavel_id").references(() => profiles.id, {
+      onDelete: "set null",
+    }),
     ativo: boolean("ativo").default(true),
     kpiVisibility: jsonb("kpi_visibility").default(
-      sql`'{"custos": true, "evitadas": true, "recebidos": true, "roi": true}'`,
+      sql`'{"custos": true, "evitadas": true, "recebidos": true, "roi": true}'::jsonb`,
     ),
     criadoEm: timestamp("created_at").default(sql`now()`),
   },
   (table) => ({
     cnpjIdx: index("idx_clients_cnpj").on(table.cnpj),
+    responsavelIdx: index("idx_clients_responsavel").on(table.responsavelId),
   }),
 );
 
