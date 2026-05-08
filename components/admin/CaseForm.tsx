@@ -124,7 +124,7 @@ export function CaseForm({
             <Label htmlFor="fase">Fase *</Label>
             <Select
               value={faseValue || ""}
-              onValueChange={(value) => setValue("fase", value as any)}
+              onValueChange={(value) => setValue("fase", value as "conhecimento" | "recurso" | "execucao" | "encerrado")}
               disabled={loading}
             >
               <SelectTrigger id="fase">
@@ -146,7 +146,7 @@ export function CaseForm({
             <Label htmlFor="status">Status *</Label>
             <Select
               value={statusValue || ""}
-              onValueChange={(value) => setValue("status", value as any)}
+              onValueChange={(value) => setValue("status", value as "em_andamento" | "resolvido" | "suspenso")}
               disabled={loading}
             >
               <SelectTrigger id="status">

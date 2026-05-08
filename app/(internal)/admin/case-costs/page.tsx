@@ -57,8 +57,7 @@ export default function CaseCostsPage() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [selectedClientId, setSelectedClientId] = useState<string>("");
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [pagination, setPagination] = useState<any>(null);
+  const [pagination, setPagination] = useState<{ total: number; pages: number } | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [_selectedCost, setSelectedCost] = useState<CaseCost | null>(null);
 
@@ -67,19 +66,19 @@ export default function CaseCostsPage() {
     loadClients();
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (selectedClientId) {
       loadCosts();
       loadCases();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, selectedClientId]);
 
   const loadClients = async () => {
     try {
       const result = await listClients(1, 100);
       if (result.success && result.data) {
-        const clients = result.data as any[];
+        const clients = result.data as { id: string; razao_social: string }[];
         setClients(clients);
         // Set first client as default
         if (clients.length > 0) {
@@ -88,7 +87,7 @@ export default function CaseCostsPage() {
       } else {
         toast.error(result.error);
       }
-    } catch (error) {
+    } catch {
       toast.error("Erro ao carregar clientes");
     }
   };
@@ -105,7 +104,7 @@ export default function CaseCostsPage() {
       } else {
         toast.error(result.error);
       }
-    } catch (error) {
+    } catch {
       toast.error("Erro ao carregar custos");
     } finally {
       setLoading(false);
@@ -120,7 +119,7 @@ export default function CaseCostsPage() {
       if (result.success && result.data) {
         setCases(result.data);
       }
-    } catch (error) {
+    } catch {
       console.error("Erro ao carregar processos:", error);
     }
   };
@@ -135,7 +134,7 @@ export default function CaseCostsPage() {
           toast.success("Custo deletado");
           await loadCosts();
         }
-      } catch (error) {
+      } catch {
         toast.error("Erro ao deletar custo");
       }
     }

@@ -8,7 +8,7 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  DragEndEvent,
+  type DragEndEvent,
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -70,7 +70,7 @@ function DraggableLawyerCard({ lawyer }: { lawyer: Lawyer }) {
 function DropZoneCell({
   lawyerId,
   clientId,
-  clientName,
+  clientName: _clientName,
   isAssigned,
   onRemove,
 }: {
@@ -119,7 +119,7 @@ export function AssignmentMatrix({
   onUpdate,
 }: AssignmentMatrixProps) {
   const [assignments, setAssignments] = useState<Assignment[]>(initialAssignments);
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -135,7 +135,7 @@ export function AssignmentMatrix({
       if (!over || !active) return;
 
       // Extract IDs from the sortable IDs
-      const fromId = String(active.id);
+      const _fromId = String(active.id);
       const toId = String(over.id);
 
       // Check if this is a drop on a zone cell (format: "lawyerId-clientId")
@@ -172,7 +172,7 @@ export function AssignmentMatrix({
           toast.success("Advogado atribuído ao cliente");
           onUpdate?.();
         }
-      } catch (error) {
+      } catch {
         toast.error("Erro ao atribuir advogado");
       } finally {
         setLoading(false);
@@ -198,7 +198,7 @@ export function AssignmentMatrix({
           toast.success("Atribuição removida");
           onUpdate?.();
         }
-      } catch (error) {
+      } catch {
         toast.error("Erro ao remover atribuição");
       } finally {
         setLoading(false);

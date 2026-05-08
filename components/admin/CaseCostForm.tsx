@@ -112,7 +112,7 @@ export function CaseCostForm({
           <Label htmlFor="tipo">Tipo de Custo *</Label>
           <Select
             value={tipoValue || ""}
-            onValueChange={(value) => setValue("tipo", value as any)}
+            onValueChange={(value) => setValue("tipo", value as "honorario_fixo" | "honorario_variavel" | "custas" | "outro")}
             disabled={loading}
           >
             <SelectTrigger id="tipo">

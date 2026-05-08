@@ -49,8 +49,7 @@ export default function CaseReceiptsPage() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [selectedClientId, setSelectedClientId] = useState<string>("");
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [pagination, setPagination] = useState<any>(null);
+  const [pagination, setPagination] = useState<{ total: number; pages: number } | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [_selectedReceipt, setSelectedReceipt] = useState<CaseReceipt | null>(null);
 
@@ -59,19 +58,19 @@ export default function CaseReceiptsPage() {
     loadClients();
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (selectedClientId) {
       loadReceipts();
       loadCases();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, selectedClientId]);
 
   const loadClients = async () => {
     try {
       const result = await listClients(1, 100);
       if (result.success && result.data) {
-        const clients = result.data as any[];
+        const clients = result.data as { id: string; razao_social: string }[];
         setClients(clients);
         // Set first client as default
         if (clients.length > 0) {
@@ -80,7 +79,7 @@ export default function CaseReceiptsPage() {
       } else {
         toast.error(result.error);
       }
-    } catch (error) {
+    } catch {
       toast.error("Erro ao carregar clientes");
     }
   };
@@ -102,7 +101,7 @@ export default function CaseReceiptsPage() {
       } else {
         toast.error(result.error);
       }
-    } catch (error) {
+    } catch {
       toast.error("Erro ao carregar recebimentos");
     } finally {
       setLoading(false);
@@ -117,7 +116,7 @@ export default function CaseReceiptsPage() {
       if (result.success && result.data) {
         setCases(result.data);
       }
-    } catch (error) {
+    } catch {
       console.error("Erro ao carregar processos:", error);
     }
   };
@@ -132,7 +131,7 @@ export default function CaseReceiptsPage() {
           toast.success("Recebimento deletado");
           await loadReceipts();
         }
-      } catch (error) {
+      } catch {
         toast.error("Erro ao deletar recebimento");
       }
     }

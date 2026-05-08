@@ -14,11 +14,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Cria cliente Supabase para ler sessão dos cookies
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
+  // Garante que as variáveis de ambiente existem
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    // Env vars ausentes → redireciona para login por segurança
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // Response mutável para repassar cookies de sessão atualizados
+  let response = NextResponse.next({ request });
+
+  try {
+    // Cria cliente Supabase para ler sessão dos cookies
+    const supabase = createServerClient(supabaseUrl, supabaseKey, {
       cookies: {
         getAll() {
           return request.cookies.getAll().map((cookie) => ({
@@ -33,69 +43,67 @@ export async function middleware(request: NextRequest) {
             options: Record<string, unknown>;
           }>,
         ) {
-          const response = NextResponse.next();
-          cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set(name, value, options);
-          });
-          return response;
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value),
+          );
+          response = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(
+              name,
+              value,
+              options as Parameters<typeof response.cookies.set>[2],
+            ),
+          );
         },
       },
-    },
-  );
+    });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  // Sem sessão ativa
-  if (!user) {
-    // Rota raiz → login
-    if (pathname === "/") {
+    // Sem sessão ativa → redireciona para login
+    if (!user) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
-    // Qualquer rota protegida (exceto /login e /auth/) → login
-    if (pathname !== "/login" && !pathname.startsWith("/auth/")) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-    return NextResponse.next();
-  }
 
-  // Usuário autenticado — pega seu perfil para checar role
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .single();
+    // Usuário autenticado — pega seu perfil para checar role
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
 
-  const role = profile?.role;
+    const role = profile?.role as string | undefined;
 
-  // Redireciona /login → dashboard apropriado se já logado
-  if (pathname === "/login") {
-    if (role === "cliente") {
-      return NextResponse.redirect(new URL("/portal", request.url));
-    }
-    // Admin, controller, advogado → dashboard interno
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-
-  // Rotas internas protegidas: /dashboard, /clients, /cases, /users, /assignments
-  // Só internos (admin, controller, advogado)
-  const internalRoutes = ["/dashboard", "/clients", "/cases", "/users", "/assignments"];
-  if (internalRoutes.some((route) => pathname.startsWith(route))) {
-    if (!["admin", "controller", "advogado"].includes(role)) {
-      return NextResponse.redirect(new URL("/portal", request.url));
-    }
-  }
-
-  // Rotas de cliente: /portal, /portal/cases
-  const clientRoutes = ["/portal"];
-  if (clientRoutes.some((route) => pathname.startsWith(route))) {
-    if (role !== "cliente") {
+    // Usuário já logado tenta acessar /login → redireciona ao dashboard correto
+    if (pathname === "/login") {
+      if (role === "cliente") {
+        return NextResponse.redirect(new URL("/portal", request.url));
+      }
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
-  }
 
-  return NextResponse.next();
+    // Rotas internas: apenas admin, controller e advogado
+    const internalRoutes = ["/dashboard", "/clients", "/cases", "/users", "/assignments"];
+    if (internalRoutes.some((route) => pathname.startsWith(route))) {
+      if (!role || !["admin", "controller", "advogado"].includes(role)) {
+        return NextResponse.redirect(new URL("/portal", request.url));
+      }
+    }
+
+    // Rotas de cliente: apenas role "cliente"
+    if (pathname.startsWith("/portal")) {
+      if (role !== "cliente") {
+        return NextResponse.redirect(new URL("/dashboard", request.url));
+      }
+    }
+
+    return response;
+  } catch {
+    // Qualquer erro inesperado → redireciona para login por segurança
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
 }
 
 /**

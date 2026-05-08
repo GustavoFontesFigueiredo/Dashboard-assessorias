@@ -76,19 +76,19 @@ export default function CasesPage() {
     loadClients();
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (selectedClientId) {
       loadCases();
       loadLawyers();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, selectedClientId]);
 
   const loadClients = async () => {
     try {
       const result = await listClients(1, 100);
       if (result.success && result.data) {
-        const clients = result.data as any[];
+        const clients = result.data as { id: string; razao_social: string }[];
         setClients(clients);
         // Set first client as default
         if (clients.length > 0) {
@@ -97,7 +97,7 @@ export default function CasesPage() {
       } else {
         toast.error(result.error);
       }
-    } catch (error) {
+    } catch {
       toast.error("Erro ao carregar clientes");
     }
   };
@@ -114,7 +114,7 @@ export default function CasesPage() {
       } else {
         toast.error(result.error);
       }
-    } catch (error) {
+    } catch {
       toast.error("Erro ao carregar processos");
     } finally {
       setLoading(false);
@@ -126,14 +126,14 @@ export default function CasesPage() {
       const result = await listAssignableUsers();
       if ("data" in result && Array.isArray(result.data)) {
         setLawyers(
-          result.data.map((u: any) => ({
+          result.data.map((u: { id: string; nome: string }) => ({
             id: u.id,
             nome: u.nome,
           }))
         );
       }
-    } catch (error) {
-      console.error("Erro ao carregar advogados:", error);
+    } catch {
+      console.error("Erro ao carregar advogados");
     }
   };
 
@@ -147,7 +147,7 @@ export default function CasesPage() {
           toast.success("Processo deletado");
           await loadCases();
         }
-      } catch (error) {
+      } catch {
         toast.error("Erro ao deletar processo");
       }
     }

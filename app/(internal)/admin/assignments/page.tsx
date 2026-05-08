@@ -41,7 +41,7 @@ export default function AssignmentsPage() {
 
       if ("data" in lawyersResult && Array.isArray(lawyersResult.data)) {
         setLawyers(
-          lawyersResult.data.map((u: any) => ({
+          lawyersResult.data.map((u: { id: string; nome: string }) => ({
             id: u.id,
             nome: u.nome,
           }))
@@ -57,7 +57,7 @@ export default function AssignmentsPage() {
         Array.isArray(assignmentsResult.data)
       ) {
         setAssignments(
-          assignmentsResult.data.map((a: any) => ({
+          assignmentsResult.data.map((a: { advogado_id: string; client_id: string }) => ({
             advogado_id: a.advogado_id,
             client_id: a.client_id,
           }))

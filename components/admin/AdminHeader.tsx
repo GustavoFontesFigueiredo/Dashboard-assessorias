@@ -30,9 +30,8 @@ export function AdminHeader({
       {/* Breadcrumb */}
       {breadcrumbs && breadcrumbs.length > 0 && (
         <nav className="mb-4 flex items-center gap-1 text-sm text-muted-foreground">
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           <Link
-            href={"/internal/admin" as any}
+            href="/dashboard"
             className="hover:text-foreground"
           >
             Admin
@@ -41,9 +40,8 @@ export function AdminHeader({
             <div key={idx} className="flex items-center gap-1">
               <ChevronRight className="h-4 w-4" />
               {crumb.href ? (
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 <Link
-                  href={crumb.href as any}
+                  href={crumb.href}
                   className="hover:text-foreground"
                 >
                   {crumb.label}

@@ -40,7 +40,7 @@ interface KPIData {
 type PeriodType = "mes" | "trimestre" | "ano";
 
 export default function DashboardPage() {
-  const [user, setUser] = useState<any>(null);
+  const [_user, setUser] = useState<Record<string, unknown> | null>(null);
   const [clients, setClients] = useState<Client[]>([]);
   const [selectedClientId, setSelectedClientId] = useState<string>("");
   const [period, setPeriod] = useState<PeriodType>("mes");

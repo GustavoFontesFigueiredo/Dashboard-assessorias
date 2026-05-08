@@ -194,6 +194,7 @@ export function ReportPDF({
             <Image
               src={logoUrl}
               style={styles.logo}
+              alt=""
             />
           )}
         </View>

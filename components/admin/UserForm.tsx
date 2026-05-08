@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { userCreateSchema, roleEnum, type UserCreateInput } from "@/lib/validators/user";
+import { userCreateSchema, type UserCreateInput } from "@/lib/validators/user";
 import { createUser, updateUser } from "@/lib/actions/users";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -111,7 +111,7 @@ export function UserForm({
           <Label htmlFor="role">Papel *</Label>
           <Select
             value={roleValue || ""}
-            onValueChange={(value) => setValue("role", value as any)}
+            onValueChange={(value) => setValue("role", value as "admin" | "controller" | "advogado" | "cliente")}
             disabled={loading}
           >
             <SelectTrigger id="role">

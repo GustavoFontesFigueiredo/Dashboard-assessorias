@@ -47,7 +47,7 @@ interface Client {
 type PeriodType = "mes" | "trimestre" | "ano";
 
 export default function ClientPortalPage() {
-  const [user, setUser] = useState<any>(null);
+  const [_user, setUser] = useState<Record<string, unknown> | null>(null);
   const [client, setClient] = useState<Client | null>(null);
   const [period, setPeriod] = useState<PeriodType>("mes");
   const [kpis, setKpis] = useState<KPIData>({
@@ -132,7 +132,8 @@ export default function ClientPortalPage() {
     };
 
     loadDashboardData();
-  }, [user?.client_id, period]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [period]);
 
   const getStartDate = (now: Date, periodType: PeriodType): Date => {
     const date = new Date(now);
@@ -196,7 +197,7 @@ export default function ClientPortalPage() {
             </SelectContent>
           </Select>
         </div>
-        <Link href={"/client/portal/cases" as any}>
+        <Link href="/portal/cases">
           <Button className="gap-2 bg-brand-gradient text-white hover:opacity-90">
             <FileText className="h-4 w-4" />
             Ver Processos

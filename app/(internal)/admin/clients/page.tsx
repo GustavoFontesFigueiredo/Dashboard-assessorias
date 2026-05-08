@@ -35,9 +35,9 @@ export default function ClientsPage() {
   const [openModal, setOpenModal] = useState(false);
   const [_selectedClient, setSelectedClient] = useState<Client | null>(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadClients();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, search]);
 
   const loadClients = async () => {

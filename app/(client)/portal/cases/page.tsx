@@ -39,7 +39,7 @@ export default function ClientCasesPage() {
   const [cases, setCases] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [pagination, setPagination] = useState<any>(null);
+  const [pagination, setPagination] = useState<{ total: number; pages: number } | null>(null);
 
   useEffect(() => {
     const loadCases = async () => {
@@ -73,7 +73,7 @@ export default function ClientCasesPage() {
     <div className="space-y-6">
       {/* Cabeçalho */}
       <div className="flex items-center gap-4">
-        <Link href={"/client/portal" as any}>
+        <Link href="/portal">
           <Button variant="outline" size="sm" className="gap-2">
             <ChevronLeft className="h-4 w-4" />
             Voltar

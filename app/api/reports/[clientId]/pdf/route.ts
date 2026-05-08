@@ -1,14 +1,12 @@
 import { renderToStream } from "@react-pdf/renderer";
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { createElement as h } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { getSessionUser } from "@/lib/auth/getSession";
 import { canAccessClient } from "@/lib/auth/rbac";
 import { ReportPDF } from "@/lib/pdf/report-template";
-import {
-  calculateKPIs,
-  getCasesStatusSummary,
-} from "@/lib/db/queries/kpis";
+import { calculateKPIs } from "@/lib/db/queries/kpis";
 import { listCases } from "@/lib/actions/cases";
 
 const supabase = createClient(
@@ -114,6 +112,7 @@ export async function GET(
       period: periodLabel,
       kpis,
       cases,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
 
     const stream = await renderToStream(doc);
