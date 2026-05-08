@@ -53,11 +53,8 @@ export async function middleware(request: NextRequest) {
     if (pathname === "/") {
       return NextResponse.redirect(new URL("/login", request.url));
     }
-    // Rota protegida → login
-    if (
-      pathname.startsWith("/internal/") ||
-      pathname.startsWith("/client/")
-    ) {
+    // Qualquer rota protegida (exceto /login e /auth/) → login
+    if (pathname !== "/login" && !pathname.startsWith("/auth/")) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
     return NextResponse.next();
@@ -75,23 +72,26 @@ export async function middleware(request: NextRequest) {
   // Redireciona /login → dashboard apropriado se já logado
   if (pathname === "/login") {
     if (role === "cliente") {
-      return NextResponse.redirect(new URL("/client/portal", request.url));
+      return NextResponse.redirect(new URL("/portal", request.url));
     }
     // Admin, controller, advogado → dashboard interno
-    return NextResponse.redirect(new URL("/internal/dashboard", request.url));
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  // Rotas internas: só internos (admin, controller, advogado)
-  if (pathname.startsWith("/internal/")) {
+  // Rotas internas protegidas: /dashboard, /clients, /cases, /users, /assignments
+  // Só internos (admin, controller, advogado)
+  const internalRoutes = ["/dashboard", "/clients", "/cases", "/users", "/assignments"];
+  if (internalRoutes.some((route) => pathname.startsWith(route))) {
     if (!["admin", "controller", "advogado"].includes(role)) {
-      return NextResponse.redirect(new URL("/client/portal", request.url));
+      return NextResponse.redirect(new URL("/portal", request.url));
     }
   }
 
-  // Rotas de cliente: só clientes
-  if (pathname.startsWith("/client/")) {
+  // Rotas de cliente: /portal, /portal/cases
+  const clientRoutes = ["/portal"];
+  if (clientRoutes.some((route) => pathname.startsWith(route))) {
     if (role !== "cliente") {
-      return NextResponse.redirect(new URL("/internal/dashboard", request.url));
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     }
   }
 
