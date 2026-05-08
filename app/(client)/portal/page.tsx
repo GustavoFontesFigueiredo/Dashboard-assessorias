@@ -47,7 +47,7 @@ interface Client {
 type PeriodType = "mes" | "trimestre" | "ano";
 
 export default function ClientPortalPage() {
-  const [_user, setUser] = useState<Record<string, unknown> | null>(null);
+  const [_user, setUser] = useState<import("@/lib/auth/getSession").SessionUser | null>(null);
   const [client, setClient] = useState<Client | null>(null);
   const [period, setPeriod] = useState<PeriodType>("mes");
   const [kpis, setKpis] = useState<KPIData>({
@@ -95,7 +95,7 @@ export default function ClientPortalPage() {
   // Carregar KPIs quando período muda
   useEffect(() => {
     const loadDashboardData = async () => {
-      if (!user?.client_id) return;
+      if (!client?.id) return;
 
       setLoading(true);
       try {
@@ -103,26 +103,26 @@ export default function ClientPortalPage() {
         const startDate = getStartDate(now, period);
 
         // Carregar KPIs
-        const kpiData = await calculateKPIs(user.client_id, startDate, now);
+        const kpiData = await calculateKPIs(client.id, startDate, now);
         setKpis(kpiData);
 
         // Carregar séries temporais
         const costosTimeSeries = await getCostosTimeSeries(
-          user.client_id,
+          client.id,
           startDate,
           now
         );
         setCostosData(costosTimeSeries);
 
         const recebimentosTimeSeries = await getRecebimentosTimeSeries(
-          user.client_id,
+          client.id,
           startDate,
           now
         );
         setRecebimentosData(recebimentosTimeSeries);
 
         // Carregar status dos casos
-        const casesStatusSummary = await getCasesStatusSummary(user.client_id);
+        const casesStatusSummary = await getCasesStatusSummary(client.id);
         setCasesStatus(casesStatusSummary);
       } catch (error) {
         console.error("Erro ao carregar dashboard:", error);
@@ -283,7 +283,7 @@ export default function ClientPortalPage() {
             </p>
             <div className="mt-4 flex gap-2">
               <PdfDownloadButton
-                clientId={user?.client_id}
+                clientId={client?.id ?? ""}
                 period={period}
                 className="bg-white text-brand-700 hover:bg-gray-100"
               />

@@ -191,10 +191,9 @@ export function ReportPDF({
             <Text style={styles.subtitle}>Período: {period}</Text>
           </View>
           {logoUrl && (
-            <Image
+            <Image // eslint-disable-line jsx-a11y/alt-text
               src={logoUrl}
               style={styles.logo}
-              alt=""
             />
           )}
         </View>

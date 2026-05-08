@@ -3,7 +3,33 @@
     "allow": [
       "Bash(npx @tech-leads-club/agent-skills install --skill tlc-spec-driven)",
       "Bash(ls \"C:\\\\\\\\Users\\\\\\\\Usuario\\\\\\\\Desktop\\\\\\\\IA\\\\\\\\FFADV Assessorias\\\\\\\\app\\\\\\\\\\(client\\)\")",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git commit -m 'Fix: Specify exact pnpm version in GitHub Actions to match project version *)",
+      "Bash(git push *)",
+      "Bash(git commit -m 'Fix: Correct route protection middleware to match actual URL paths *)",
+      "Bash(git commit -m 'Fix: Move middleware.ts to project root for proper Next.js edge execution *)",
+      "Bash(pnpm lint *)",
+      "Bash(grep -v \"^$\")",
+      "Bash(awk 'NR>=63 && NR<=80' app/\\\\\\(internal\\\\\\)/admin/case-costs/page.tsx)",
+      "Bash(awk 'NR>=72 && NR<=78' app/\\\\\\(internal\\\\\\)/admin/case-costs/page.tsx)",
+      "Bash(awk 'NR>=64 && NR<=70' app/\\\\\\(internal\\\\\\)/admin/case-receipts/page.tsx)",
+      "Bash(awk 'NR>=82 && NR<=88' app/\\\\\\(internal\\\\\\)/admin/cases/page.tsx)",
+      "Bash(awk 'NR>=38 && NR<=44' app/\\\\\\(internal\\\\\\)/admin/clients/page.tsx)",
+      "Bash(awk 'NR>=49 && NR<=55' app/\\\\\\(internal\\\\\\)/admin/users/page.tsx)",
+      "Bash(awk 'NR>=63 && NR<=78' app/\\\\\\(internal\\\\\\)/admin/case-costs/page.tsx)",
+      "Bash(awk 'NR>=79 && NR<=88' app/\\\\\\(internal\\\\\\)/admin/cases/page.tsx)",
+      "Bash(sed -i 's/setValue\\(\"tipo\", value as any\\)/setValue\\(\"tipo\", value as \"honorario_fixo\" | \"honorario_variavel\" | \"custas\" | \"outro\"\\)/g' components/admin/CaseCostForm.tsx)",
+      "Bash(sed -i 's/setValue\\(\"fase\", value as any\\)/setValue\\(\"fase\", value as \"conhecimento\" | \"recurso\" | \"execucao\" | \"encerrado\"\\)/g' components/admin/CaseForm.tsx)",
+      "Bash(sed -i 's/setValue\\(\"status\", value as any\\)/setValue\\(\"status\", value as \"em_andamento\" | \"resolvido\" | \"suspenso\"\\)/g' components/admin/CaseForm.tsx)",
+      "Bash(sed -i 's/setValue\\(\"role\", value as any\\)/setValue\\(\"role\", value as \"admin\" | \"controller\" | \"advogado\" | \"cliente\"\\)/g' components/admin/UserForm.tsx)",
+      "Bash(npx vercel *)",
+      "Bash(cat .env.local)",
+      "Bash(cat .env)",
+      "Bash(pnpm build *)",
+      "Bash(sed -i 's/if \\(!user?.client_id\\) return;/if \\(!client?.id\\) return;/g' app/\\\\\\(client\\\\\\)/portal/page.tsx)",
+      "Bash(sed -i 's/calculateKPIs\\(user.client_id,/calculateKPIs\\(client.id,/g' app/\\\\\\(client\\\\\\)/portal/page.tsx)",
+      "Bash(sed -i 's/getCostosTimeSeries\\(\\\\n.*user.client_id,/getCostosTimeSeries\\(client.id,/g' app/\\\\\\(client\\\\\\)/portal/page.tsx)"
     ]
   }
 }

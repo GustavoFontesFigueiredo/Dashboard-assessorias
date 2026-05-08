@@ -57,7 +57,7 @@ export default function CaseCostsPage() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [selectedClientId, setSelectedClientId] = useState<string>("");
-  const [pagination, setPagination] = useState<{ total: number; pages: number } | null>(null);
+  const [pagination, setPagination] = useState<{ page: number; pageSize: number; total: number; totalPages: number } | undefined>(undefined);
   const [openModal, setOpenModal] = useState(false);
   const [_selectedCost, setSelectedCost] = useState<CaseCost | null>(null);
 
@@ -82,7 +82,7 @@ export default function CaseCostsPage() {
         setClients(clients);
         // Set first client as default
         if (clients.length > 0) {
-          setSelectedClientId(clients[0].id);
+          setSelectedClientId(clients[0]?.id ?? "");
         }
       } else {
         toast.error(result.error);
@@ -120,7 +120,7 @@ export default function CaseCostsPage() {
         setCases(result.data);
       }
     } catch {
-      console.error("Erro ao carregar processos:", error);
+      console.error("Erro ao carregar processos");
     }
   };
 

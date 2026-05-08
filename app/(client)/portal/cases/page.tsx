@@ -39,7 +39,7 @@ export default function ClientCasesPage() {
   const [cases, setCases] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [pagination, setPagination] = useState<{ total: number; pages: number } | null>(null);
+  const [pagination, setPagination] = useState<{ page: number; pageSize: number; total: number; totalPages: number } | undefined>(undefined);
 
   useEffect(() => {
     const loadCases = async () => {

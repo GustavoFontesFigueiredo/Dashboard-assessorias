@@ -92,7 +92,7 @@ export default function CasesPage() {
         setClients(clients);
         // Set first client as default
         if (clients.length > 0) {
-          setSelectedClientId(clients[0].id);
+          setSelectedClientId(clients[0]?.id ?? "");
         }
       } else {
         toast.error(result.error);

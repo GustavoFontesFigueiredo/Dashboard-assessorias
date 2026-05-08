@@ -42,7 +42,7 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [roleFilter, setRoleFilter] = useState<string>("all");
-  const [pagination, setPagination] = useState<{ total: number; pages: number } | null>(null);
+  const [pagination, setPagination] = useState<{ page: number; pageSize: number; total: number; totalPages: number } | undefined>(undefined);
   const [openModal, setOpenModal] = useState(false);
   const [_selectedUser, setSelectedUser] = useState<User | null>(null);
 
