@@ -59,6 +59,37 @@ export default async function AdminLayout({
               Atribuições
             </Button>
           </Link>
+
+          {/* Divisor */}
+          <div className="my-4 border-t border-border" />
+
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          <Link href={"/internal/admin/cases" as any}>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+            >
+              Processos
+            </Button>
+          </Link>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          <Link href={"/internal/admin/case-costs" as any}>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+            >
+              Custos
+            </Button>
+          </Link>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          <Link href={"/internal/admin/case-receipts" as any}>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+            >
+              Recebimentos
+            </Button>
+          </Link>
         </nav>
       </aside>
 

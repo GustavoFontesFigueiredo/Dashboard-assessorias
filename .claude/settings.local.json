@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx @tech-leads-club/agent-skills install --skill tlc-spec-driven)"
+      "Bash(npx @tech-leads-club/agent-skills install --skill tlc-spec-driven)",
+      "Bash(ls \"C:\\\\\\\\Users\\\\\\\\Usuario\\\\\\\\Desktop\\\\\\\\IA\\\\\\\\FFADV Assessorias\\\\\\\\app\\\\\\\\\\(client\\)\")",
+      "Bash(git add *)"
     ]
   }
 }

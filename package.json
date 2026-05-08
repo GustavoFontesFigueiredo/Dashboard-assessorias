@@ -10,9 +10,15 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
+    "test:e2e:watch": "playwright test --watch",
+    "test:e2e:debug": "playwright test --debug",
+    "test:all": "pnpm test && pnpm test:e2e",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "node scripts/seed.js",
     "format": "prettier --write ."
   },
   "dependencies": {

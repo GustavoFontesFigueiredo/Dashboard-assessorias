@@ -9,8 +9,25 @@ export default defineConfig({
   },
   test: {
     environment: "node",
+    globals: true,
     include: ["tests/unit/**/*.test.ts"],
-    exclude: ["tests/e2e/**", "node_modules/**"],
-    globals: false,
+    exclude: ["tests/e2e/**", "node_modules/**", ".next/**"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+      exclude: [
+        "node_modules/",
+        "tests/",
+        "dist/",
+        ".next/",
+        "*.config.ts",
+      ],
+      thresholds: {
+        lines: 50,
+        functions: 50,
+        branches: 50,
+        statements: 50,
+      },
+    },
   },
 });
