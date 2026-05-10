@@ -35,7 +35,8 @@ export default function LoginPage() {
       setError(error.message);
       setLoading(false);
     } else {
-      router.replace("/");
+      // Full page reload para garantir que o middleware leia o cookie de sessão
+      window.location.href = "/";
     }
   };
 
