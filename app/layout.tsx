@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   },
   description:
     "Dashboard de resultados da assessoria jurídica — custos, condenações evitadas, valores recebidos e ROI.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

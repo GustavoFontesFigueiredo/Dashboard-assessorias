@@ -16,6 +16,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
+import { ClientUpdatesTimeline } from "@/components/timeline/ClientUpdatesTimeline";
+import { AiSummaryCard } from "@/components/dashboard/AiSummaryCard";
 import {
   calculateKPIs,
   getCostosTimeSeries,
@@ -265,6 +267,12 @@ export default function ClientPortalPage() {
               Nenhum processo registrado
             </Card>
           )}
+
+          {/* Análise IA */}
+          {client?.id && <AiSummaryCard clientId={client.id} />}
+
+          {/* Timeline de Atualizações */}
+          {client?.id && <ClientUpdatesTimeline clientId={client.id} />}
 
           {/* Resumo */}
           <Card className="space-y-4 bg-gradient-to-r from-brand-700 to-brand-500 p-8 text-white">

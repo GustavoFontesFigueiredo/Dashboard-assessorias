@@ -1,0 +1,18 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="#C9963A">
+  <!-- Pilar central -->
+  <rect x="112" y="30" width="32" height="130" rx="4"/>
+  <!-- Capitel -->
+  <rect x="80" y="24" width="96" height="18" rx="4"/>
+  <!-- Base -->
+  <rect x="72" y="160" width="112" height="16" rx="4"/>
+  <!-- Pedestal -->
+  <rect x="56" y="176" width="144" height="14" rx="4"/>
+  <!-- Braço da balança -->
+  <rect x="68" y="90" width="120" height="10" rx="5"/>
+  <!-- Prato esquerdo -->
+  <ellipse cx="90" cy="120" rx="26" ry="8"/>
+  <rect x="86" y="98" width="8" height="24" rx="3"/>
+  <!-- Prato direito -->
+  <ellipse cx="166" cy="120" rx="26" ry="8"/>
+  <rect x="162" y="98" width="8" height="24" rx="3"/>
+</svg>

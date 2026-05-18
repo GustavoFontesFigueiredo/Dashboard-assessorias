@@ -95,8 +95,8 @@ export default function ClientCasesPage() {
         <>
           <div className="space-y-4">
             {cases.map((caseItem) => (
+              <Link key={caseItem.id} href={`/portal/cases/${caseItem.id}`}>
               <Card
-                key={caseItem.id}
                 className="overflow-hidden border border-gray-200 p-6 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-start justify-between">
@@ -183,6 +183,7 @@ export default function ClientCasesPage() {
                   </div>
                 </div>
               </Card>
+              </Link>
             ))}
           </div>
 

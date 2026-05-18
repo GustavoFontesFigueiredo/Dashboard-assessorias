@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createServerClient } from "@supabase/ssr";
+import { translateError } from "@/lib/utils/errors";
 
 export async function loginAction(formData: FormData) {
   const email = formData.get("email") as string;
@@ -30,7 +31,7 @@ export async function loginAction(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    return { error: error.message };
+    return { error: translateError(error.message) };
   }
 
   // Busca o perfil para saber para onde redirecionar

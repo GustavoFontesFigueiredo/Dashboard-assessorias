@@ -1,4 +1,4 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 /**
@@ -7,6 +7,7 @@ import { cookies } from "next/headers";
  */
 export async function getSupabaseServerClient() {
   const cookieStore = await cookies();
+
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -15,19 +16,14 @@ export async function getSupabaseServerClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(
-          cookiesToSet: Array<{
-            name: string;
-            value: string;
-            options: CookieOptions;
-          }>,
-        ) {
+        setAll(cookiesToSet: Array<{ name: string; value: string; options?: Record<string, unknown> }>) {
           try {
             cookiesToSet.forEach(({ name, value, options }) => {
-              cookieStore.set(name, value, options);
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              cookieStore.set(name, value, options as any);
             });
           } catch {
-            // Server Component context — set não disponível, ignora.
+            // Em Server Components o set não é permitido; ignora silenciosamente.
           }
         },
       },

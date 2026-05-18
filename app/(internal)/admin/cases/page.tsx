@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { listCases, deleteCase } from "@/lib/actions/cases";
@@ -158,6 +159,14 @@ export default function CasesPage() {
       key: "numero_processo",
       label: "Número do Processo",
       width: "25%",
+      render: (value, row) => (
+        <Link
+          href={`/admin/cases/${row.id}`}
+          className="font-medium text-brand-700 hover:underline"
+        >
+          {String(value)}
+        </Link>
+      ),
     },
     {
       key: "fase",

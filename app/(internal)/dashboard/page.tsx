@@ -1,5 +1,6 @@
 "use client";
 
+import type { SessionUser } from "@/lib/auth/getSession";
 import { useState, useEffect } from "react";
 import { TrendingUp, DollarSign, Shield, Target } from "lucide-react";
 import { AdminHeader } from "@/components/admin/AdminHeader";
@@ -24,6 +25,9 @@ import { listClients } from "@/lib/actions/clients";
 import { getCurrentUser } from "@/lib/actions/auth";
 import { getLawyerAssignments } from "@/lib/actions/assignments";
 import { PdfDownloadButton } from "@/components/pdf/PdfDownloadButton";
+import { InactivityAlerts } from "@/components/dashboard/InactivityAlerts";
+import { WeeklyDigest } from "@/components/dashboard/WeeklyDigest";
+import { LawyerInsightPanel } from "@/components/dashboard/LawyerInsightPanel";
 
 interface Client {
   id: string;
@@ -40,7 +44,7 @@ interface KPIData {
 type PeriodType = "mes" | "trimestre" | "ano";
 
 export default function DashboardPage() {
-  const [_user, setUser] = useState<import("@/lib/auth/getSession").SessionUser | null>(null);
+  const [_user, setUser] = useState<SessionUser | null>(null);
   const [clients, setClients] = useState<Client[]>([]);
   const [selectedClientId, setSelectedClientId] = useState<string>("");
   const [period, setPeriod] = useState<PeriodType>("mes");
@@ -248,6 +252,20 @@ export default function DashboardPage() {
               variant="primary"
             />
           </div>
+
+          {/* Digest + Alertas */}
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <WeeklyDigest />
+            <InactivityAlerts />
+          </div>
+
+          {/* Insight IA do cliente selecionado */}
+          {selectedClientId && (
+            <LawyerInsightPanel
+              clientId={selectedClientId}
+              clientName={clients.find((c) => c.id === selectedClientId)?.razao_social || ""}
+            />
+          )}
 
           {/* Gráficos */}
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">

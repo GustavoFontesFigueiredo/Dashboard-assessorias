@@ -29,7 +29,26 @@
       "Bash(pnpm build *)",
       "Bash(sed -i 's/if \\(!user?.client_id\\) return;/if \\(!client?.id\\) return;/g' app/\\\\\\(client\\\\\\)/portal/page.tsx)",
       "Bash(sed -i 's/calculateKPIs\\(user.client_id,/calculateKPIs\\(client.id,/g' app/\\\\\\(client\\\\\\)/portal/page.tsx)",
-      "Bash(sed -i 's/getCostosTimeSeries\\(\\\\n.*user.client_id,/getCostosTimeSeries\\(client.id,/g' app/\\\\\\(client\\\\\\)/portal/page.tsx)"
+      "Bash(sed -i 's/getCostosTimeSeries\\(\\\\n.*user.client_id,/getCostosTimeSeries\\(client.id,/g' app/\\\\\\(client\\\\\\)/portal/page.tsx)",
+      "Bash(render --version)",
+      "Bash(npx @render-com/cli --version)",
+      "mcp__Claude_in_Chrome__navigate",
+      "mcp__Claude_in_Chrome__read_page",
+      "Bash(git commit --allow-empty -m 'ci: trigger redeploy from latest commit *)",
+      "Bash(git commit -m 'Fix login redirect: use full page reload to trigger middleware session check *)",
+      "Bash(git commit -m 'Rewrite login with Server Action for proper SSR cookie handling *)",
+      "Bash(xargs grep -l \"redirect\\\\|useRouter\\\\|push\\\\|replace\")",
+      "Bash(npx tsx *)",
+      "Bash(mkdir -p \"C:\\\\Users\\\\Usuario\\\\Desktop\\\\IA\\\\FFADV Assessorias\\\\app\\\\\\(internal\\)\\\\admin\\\\cases\\\\[id]\" \"C:\\\\Users\\\\Usuario\\\\Desktop\\\\IA\\\\FFADV Assessorias\\\\app\\\\\\(client\\)\\\\portal\\\\cases\\\\[id]\")",
+      "Bash(npx tsc *)",
+      "Bash(node -e \"const r = require\\('@react-pdf/renderer'\\); console.log\\(typeof r.renderToBuffer\\)\")",
+      "Bash(npx next *)",
+      "Bash(timeout 8)",
+      "Bash(findstr /i \"ready port\")",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__Claude_in_Chrome__browser_batch",
+      "mcp__Claude_in_Chrome__list_connected_browsers",
+      "mcp__Claude_in_Chrome__select_browser"
     ]
   }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 import { listClients, deleteClient } from "@/lib/actions/clients";
 import { AdminHeader } from "@/components/admin/AdminHeader";
@@ -16,6 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ClientForm } from "@/components/admin/ClientForm";
+import { PortalUserForm } from "@/components/admin/PortalUserForm";
 
 interface Client {
   id: string;
@@ -34,6 +35,8 @@ export default function ClientsPage() {
   const [pagination, setPagination] = useState<any>(null);
   const [openModal, setOpenModal] = useState(false);
   const [_selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const [portalModal, setPortalModal] = useState(false);
+  const [portalClient, setPortalClient] = useState<Client | null>(null);
 
   useEffect(() => {
     loadClients();
@@ -131,6 +134,22 @@ export default function ClientsPage() {
         />
       </div>
 
+      {/* Modal — Criar acesso ao portal */}
+      <Dialog open={portalModal} onOpenChange={setPortalModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Criar acesso ao portal</DialogTitle>
+          </DialogHeader>
+          {portalClient && (
+            <PortalUserForm
+              clientId={portalClient.id}
+              clientName={portalClient.razao_social}
+              onSuccess={() => {/* mantém aberto para mostrar a senha */}}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* Tabela */}
       <DataTable
         columns={columns}
@@ -143,6 +162,18 @@ export default function ClientsPage() {
             <Button
               size="sm"
               variant="ghost"
+              title="Criar acesso ao portal"
+              onClick={() => {
+                setPortalClient(row);
+                setPortalModal(true);
+              }}
+            >
+              <UserPlus className="h-4 w-4 text-brand-700" />
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              title="Editar cliente"
               onClick={() => {
                 setSelectedClient(row);
                 setOpenModal(true);
@@ -153,6 +184,7 @@ export default function ClientsPage() {
             <Button
               size="sm"
               variant="ghost"
+              title="Excluir cliente"
               onClick={() => handleDelete(row.id)}
             >
               <Trash2 className="h-4 w-4 text-red-600" />

@@ -1,18 +1,21 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { BrandMark } from "./BrandMark";
+import { InternalNav } from "./InternalNav";
 
 interface BrandHeaderProps {
   /** Navegação adicional renderizada à direita */
   actions?: React.ReactNode;
   className?: string;
+  /** Se true, exibe o menu de navegação interno (dashboard, admin, etc.) */
+  showNav?: boolean;
 }
 
 /**
  * Header principal da marca Fontes Figueiredo Advogados.
  * Aplica --brand-gradient (charcoal escuro) com acento dourado no subtítulo.
  */
-export function BrandHeader({ actions, className }: BrandHeaderProps) {
+export function BrandHeader({ actions, className, showNav = false }: BrandHeaderProps) {
   return (
     <header
       className={cn(
@@ -32,6 +35,8 @@ export function BrandHeader({ actions, className }: BrandHeaderProps) {
             </span>
           </span>
         </Link>
+
+        {showNav && <InternalNav />}
 
         {actions && (
           <nav className="flex items-center gap-2">{actions}</nav>
