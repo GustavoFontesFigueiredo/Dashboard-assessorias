@@ -24,6 +24,10 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_monthly_reports_unique
 
 ALTER TABLE monthly_reports ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "monthly_reports_select" ON monthly_reports;
+DROP POLICY IF EXISTS "monthly_reports_insert" ON monthly_reports;
+DROP POLICY IF EXISTS "monthly_reports_delete" ON monthly_reports;
+
 -- Cliente vê apenas seus relatórios; admin/controller veem tudo
 CREATE POLICY "monthly_reports_select" ON monthly_reports FOR SELECT
   USING (
@@ -52,6 +56,9 @@ CREATE POLICY "monthly_reports_delete" ON monthly_reports FOR DELETE
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('reports', 'reports', false)
 ON CONFLICT (id) DO NOTHING;
+
+DROP POLICY IF EXISTS "reports_storage_select" ON storage.objects;
+DROP POLICY IF EXISTS "reports_storage_insert" ON storage.objects;
 
 -- Política de leitura: admin/controller leem tudo, cliente lê só seus
 CREATE POLICY "reports_storage_select" ON storage.objects FOR SELECT

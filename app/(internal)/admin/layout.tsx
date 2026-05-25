@@ -31,6 +31,12 @@ export default function AdminLayout({
           <Link href="/admin/cases">
             <Button variant="ghost" className="w-full justify-start">Processos</Button>
           </Link>
+          <Link href="/admin/next-steps">
+            <Button variant="ghost" className="w-full justify-start">Próximos Passos</Button>
+          </Link>
+          <Link href="/admin/meeting-minutes">
+            <Button variant="ghost" className="w-full justify-start">Atas</Button>
+          </Link>
           <Link href="/admin/case-costs">
             <Button variant="ghost" className="w-full justify-start">Custos</Button>
           </Link>

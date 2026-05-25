@@ -10,6 +10,8 @@ const navItems = [
   { label: "Dashboard", href: "/dashboard" },
   { label: "Clientes", href: "/admin/clients" },
   { label: "Processos", href: "/admin/cases" },
+  { label: "Próximos Passos", href: "/admin/next-steps" },
+  { label: "Atas", href: "/admin/meeting-minutes" },
   { label: "Lançamentos", href: "/admin/case-costs" },
   { label: "Recebimentos", href: "/admin/case-receipts" },
   { label: "Usuários", href: "/admin/users" },

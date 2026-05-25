@@ -27,7 +27,8 @@ export async function calculateKPIs(
       .lte("data_competencia", end),
     supabase
       .from("cases")
-      .select("valor_pleiteado_contra, valor_condenado_contra, valor_condenacao_favoravel"),
+      .select("valor_pleiteado_contra, valor_condenado_contra, valor_condenacao_favoravel")
+      .eq("client_id", clientId),
     supabase
       .from("case_receipts")
       .select("valor")

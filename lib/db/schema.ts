@@ -8,6 +8,7 @@ import {
   uniqueIndex,
   index,
   jsonb,
+  date,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
@@ -19,6 +20,14 @@ export const roleEnum = pgEnum("role", [
   "controller",
   "advogado",
   "cliente",
+]);
+
+export const nextStepStatusEnum = pgEnum("next_step_status", [
+  "pendente",
+  "em_andamento",
+  "aguardando_cliente",
+  "concluido",
+  "cancelado",
 ]);
 
 /**
@@ -86,6 +95,45 @@ export const clients = pgTable(
   (table) => ({
     cnpjIdx: index("idx_clients_cnpj").on(table.cnpj),
     responsavelIdx: index("idx_clients_responsavel").on(table.responsavelId),
+  }),
+);
+
+/**
+ * client_next_steps — próximos passos publicados no portal do cliente.
+ * A FK de case_id é mantida no SQL manual porque `cases` ainda não está
+ * sincronizada neste schema Drizzle.
+ */
+export const clientNextSteps = pgTable(
+  "client_next_steps",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    clientId: uuid("client_id")
+      .notNull()
+      .references(() => clients.id, { onDelete: "cascade" }),
+    caseId: uuid("case_id"),
+    title: text("title").notNull(),
+    description: text("description"),
+    ownerId: uuid("owner_id").references(() => profiles.id, {
+      onDelete: "set null",
+    }),
+    dueDate: date("due_date"),
+    status: nextStepStatusEnum("status").notNull().default("pendente"),
+    visibleToClient: boolean("visible_to_client").notNull().default(true),
+    sourceUpdateId: uuid("source_update_id"),
+    createdBy: uuid("created_by").references(() => profiles.id, {
+      onDelete: "set null",
+    }),
+    criadoEm: timestamp("created_at").default(sql`now()`),
+    atualizadoEm: timestamp("updated_at").default(sql`now()`),
+  },
+  (table) => ({
+    clientStatusDueIdx: index("idx_client_next_steps_client").on(
+      table.clientId,
+      table.status,
+      table.dueDate,
+    ),
+    caseIdx: index("idx_client_next_steps_case").on(table.caseId),
+    ownerIdx: index("idx_client_next_steps_owner").on(table.ownerId),
   }),
 );
 
